@@ -32,10 +32,10 @@ struct ContentView: View {
                     .font(.title)
                     .foregroundStyle(.purple)
                 VStack(alignment: .leading) {
-                    Text("Claude Usage Widget")
+                    Text("app.title")
                         .font(.title2.bold())
-                    Text("Configure your API credentials")
-                        .font(.caption)
+                    Text("app.subtitle")
+                        .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
@@ -44,29 +44,29 @@ struct ContentView: View {
             Divider()
 
             // OAuth section
-            GroupBox("OAuth Token (recommended)") {
+            GroupBox(label: Text("app.oauth.title")) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("If you use Claude Code with OAuth, paste your token here.")
-                        .font(.caption)
+                    Text("app.oauth.description")
+                        .font(.callout)
                         .foregroundStyle(.secondary)
-                    TextField("OAuth Bearer Token", text: $oauthToken)
+                    TextField(String(localized: "app.oauth.placeholder"), text: $oauthToken)
                         .textFieldStyle(.roundedBorder)
-                        .font(.system(size: 12, design: .monospaced))
+                        .font(.system(size: 13, design: .monospaced))
                 }
                 .padding(8)
             }
 
-            GroupBox("Session Key (alternative)") {
+            GroupBox(label: Text("app.session.title")) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Get your sessionKey from claude.ai browser cookies and your org ID from the API.")
-                        .font(.caption)
+                    Text("app.session.description")
+                        .font(.callout)
                         .foregroundStyle(.secondary)
-                    TextField("Session Key (sk-ant-sid01-...)", text: $sessionKey)
+                    TextField(String(localized: "app.session.keyPlaceholder"), text: $sessionKey)
                         .textFieldStyle(.roundedBorder)
-                        .font(.system(size: 12, design: .monospaced))
-                    TextField("Organization ID (uuid)", text: $organizationId)
+                        .font(.system(size: 13, design: .monospaced))
+                    TextField(String(localized: "app.session.orgPlaceholder"), text: $organizationId)
                         .textFieldStyle(.roundedBorder)
-                        .font(.system(size: 12, design: .monospaced))
+                        .font(.system(size: 13, design: .monospaced))
                 }
                 .padding(8)
             }
@@ -74,18 +74,18 @@ struct ContentView: View {
             // Status
             if !statusMessage.isEmpty {
                 Text(statusMessage)
-                    .font(.caption)
+                    .font(.callout)
                     .foregroundStyle(isSuccess ? .green : .red)
                     .padding(.horizontal)
             }
 
             HStack {
-                Button("Save Configuration") {
+                Button(String(localized: "app.button.save")) {
                     saveConfig()
                 }
                 .buttonStyle(.borderedProminent)
 
-                Button("Load Existing") {
+                Button(String(localized: "app.button.load")) {
                     loadConfig()
                 }
                 .buttonStyle(.bordered)
@@ -93,8 +93,8 @@ struct ContentView: View {
 
             Spacer()
 
-            Text("Config saved to: ~/.claude/claude-usage-widget.json")
-                .font(.system(size: 10, design: .monospaced))
+            Text("app.configPath")
+                .font(.system(size: 11, design: .monospaced))
                 .foregroundStyle(.tertiary)
         }
         .padding(24)
@@ -120,10 +120,10 @@ struct ContentView: View {
             let dir = configURL.deletingLastPathComponent()
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
             try data.write(to: configURL)
-            statusMessage = "Configuration saved!"
+            statusMessage = String(localized: "app.status.saved")
             isSuccess = true
         } catch {
-            statusMessage = "Failed to save: \(error.localizedDescription)"
+            statusMessage = String(format: String(localized: "app.status.saveFailed"), error.localizedDescription)
             isSuccess = false
         }
     }

@@ -6,7 +6,7 @@ A macOS desktop widget (WidgetKit) that monitors your Claude AI usage limits in 
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-[中文文档](README_CN.md)
+[한국어](README_KO.md) | [中文](README_CN.md)
 
 ## Screenshots
 
